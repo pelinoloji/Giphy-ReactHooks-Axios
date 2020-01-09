@@ -15,10 +15,12 @@
     "react-scripts": "3.3.0",
     "serialize-javascript": "^2.1.2"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "start-dev": "react-scripts start",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn && yarn run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
