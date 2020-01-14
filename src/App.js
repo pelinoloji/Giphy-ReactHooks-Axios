@@ -5,13 +5,11 @@ import axios from "axios";
 function App() {
   const [search, setSearch] = useState("");
   const [data, setData] = useState([]);
-
   const baseUrl = "https://pelin-gifs-api.herokuapp.com/";
 
   useEffect(async () => {
     const endpoint = "trending";
     const resultUrl = baseUrl + endpoint;
-
     const result = await axios.get(resultUrl); //trending scope
     if (!!result && result.status === 200) {
       setData(result.data.trending);
@@ -20,7 +18,7 @@ function App() {
 
   const loadSearchData = () => {
     const endpoint = "search";
-    const parameters = `?searchKey=${search}`;
+    const parameters = `?searchKey=${search}`; //searchKey is a backend query name
     const resultUrl = baseUrl + endpoint + parameters;
 
     axios
@@ -30,9 +28,22 @@ function App() {
           setData(data.data.search);
         }
       })
-      .catch(error => {
-        console.log(error, "error");
-      });
+      .catch(error => {});
+  };
+
+  const randomData = () => {
+    const endpoint = "random";
+    const resultUrl = baseUrl + endpoint;
+
+    axios
+      .get(resultUrl)
+      .then(data => {
+        console.log(data.data);
+        if (!!data && data.status === 200) {
+          setData([data.data.random]);
+        }
+      })
+      .catch(error => {});
   };
 
   return (
@@ -52,6 +63,14 @@ function App() {
         }}
       >
         Find
+      </button>
+      <button
+        className="Button"
+        onClick={() => {
+          randomData();
+        }}
+      >
+        Random Gifs
       </button>
       <div className="Gifs">
         {data.map(gif => {
